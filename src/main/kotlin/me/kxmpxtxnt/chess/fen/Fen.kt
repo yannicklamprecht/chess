@@ -1,9 +1,8 @@
-package me.kxmpxtxnt.consolechess.fen
+package me.kxmpxtxnt.chess.fen
 
-import me.kxmpxtxnt.consolechess.board.ChessBoard
-import me.kxmpxtxnt.consolechess.board.field.Field
-import me.kxmpxtxnt.consolechess.peace.Piece
-import me.kxmpxtxnt.consolechess.peace.PieceType
+import me.kxmpxtxnt.chess.board.ChessBoard
+import me.kxmpxtxnt.chess.board.field.Field
+import me.kxmpxtxnt.chess.piece.Piece
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -16,10 +15,20 @@ fun toFen(board: ChessBoard): String {
 }
 
 fun fromFen(fen: String): HashMap<Field, Piece> {
-  if(!validateFen(fen)){
-    throw IllegalArgumentException("Entered FEN (Forsyth-Edwards Notation) is not valid. [$fen]")
-  }
+  if(!validateFen(fen))return hashMapOf<Field, Piece>()
+
   val map: HashMap<Field, Piece> = hashMapOf()
+
+  val fieldId = 0
+
+  fen.forEach { fenChar ->
+    for(type in Piece.Type.values()){
+      if(type.fenChar.first() == fenChar){
+        
+      }
+    }
+  }
+
   return map
 }
 

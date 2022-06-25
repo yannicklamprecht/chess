@@ -1,3 +1,1 @@
-
-rootProject.name = "console-chess"
-
+rootProject.name = "chess"
