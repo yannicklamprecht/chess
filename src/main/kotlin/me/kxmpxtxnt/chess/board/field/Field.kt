@@ -1,7 +1,5 @@
 package me.kxmpxtxnt.chess.board.field
 
-import java.awt.Color
-
 class Field(val x: String,val  y: Int, val fieldID: Int, val color: FieldColor) {
 
   init {

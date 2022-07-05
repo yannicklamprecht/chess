@@ -1,7 +1,6 @@
 package me.kxmpxtxnt.chess.piece
 
 class Piece(val type: Type) {
-
   enum class Type(val fenChar: String, val startAmount: Int, val hasMaxAmount: Boolean = false) {
 
     BLACK_PAWN("p", 7),

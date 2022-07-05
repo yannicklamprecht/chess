@@ -5,49 +5,26 @@ import me.kxmpxtxnt.chess.board.field.FieldColor
 import me.kxmpxtxnt.chess.piece.Piece
 import java.awt.Color
 
+
+private var lineup: HashMap<Field, Piece> = HashMap()
+val outPieces = arrayListOf<Piece>()
+var fields = arrayListOf<Field>()
+
 class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0") {
 
-  var lineup: HashMap<Field, Piece> = HashMap()
-  var fields = arrayListOf<Field>()
+  val turn: Color = Color.WHITE
 
   init {
-    initBoard()
-  }
-
-  fun getPiece(field: Field): Piece? {
-    return lineup[field]
-  }
-
-  fun getField(id: Int): Field?{
-    if(id > 63) return null
-    for(field in fields){
-      if(id == field.fieldID){
-        return field
-      }
-    }
-    return null
-  }
-
-  fun getField(piece: Piece): Field? {
-    for (field in lineup.keys) {
-      if (lineup[field] != piece) {
-        return field
-      }
-    }
-    return null
-  }
-
-  private fun initBoard() {
     var row = 7
     var fieldID = 0
     var c = false
     var color: FieldColor
     for (field in 0..7) {
       for (column in 0..7) {
-        if(c){
-          color = FieldColor.WHITE
+        color = if (c) {
+          FieldColor.WHITE
         } else {
-          color = FieldColor.BLACK
+          FieldColor.BLACK
         }
         when (column) {
           7 -> fields.add(Field("a", row, fieldID, color))
@@ -67,16 +44,38 @@ class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR 
       if (row == 0) {
         row = 7
       }
+      fields.sortBy { it.fieldID }
     }
-
-    fields.sortBy { it.fieldID }
   }
 
-  fun Piece.isOut(): Boolean {
-    return getField(this) == null
+  fun getField(id: Int): Field {
+    if (id > 63 || id < 0) throw IllegalArgumentException("Entered field id must be between 0-63.")
+    for (field in fields) {
+      if (id == field.fieldID) {
+        return field
+      }
+    }
+    throw IllegalArgumentException("Entered illegal field id.")
   }
 
-  fun Field.isEmpty(): Boolean {
-    return lineup[this] == null
+  fun getField(piece: Piece): Field {
+    for (field in lineup.keys) {
+      if (lineup[field] != piece) {
+        return field
+      }
+    }
+    throw IllegalArgumentException("Entered illegal piece.")
   }
+}
+
+fun Piece.isOut(): Boolean {
+  return outPieces.contains(this)
+}
+
+fun Field.isEmpty(): Boolean {
+  return lineup[this] == null
+}
+
+fun Field.getPiece(): Piece?{
+  return lineup[this]
 }
