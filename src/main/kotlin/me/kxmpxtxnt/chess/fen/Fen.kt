@@ -65,9 +65,7 @@ fun fromFen(fen: String): FenResult {
 }
 
 fun validateFen(fen: String): Boolean{
-  val pattern: Pattern = Pattern.compile(FEN_REGEX)
-  val matcher: Matcher = pattern.matcher(fen)
-  return matcher.matches()
+  return Pattern.compile(FEN_REGEX).matcher(fen).matches()
 }
 
 private const val FEN_REGEX =
