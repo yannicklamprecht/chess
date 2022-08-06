@@ -1,5 +1,4 @@
-
-<h1 style="text-align:center">Chess</h1>
+# Chess
 
 ___
 
@@ -8,7 +7,7 @@ easy to integrate in any application.
 
 ___
 
-<h2 style="text-align:center">Core</h2>
+## Core
 - ⚙️ [FEN] `load` | `save`([Wikipedia.org](https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation)) 
 / ([Chess.com](https://www.chess.com/terms/fen-chess))
 - ❌ [Regular chess] Normal chess with all functions, recognition etc. Player vs. player
@@ -20,7 +19,7 @@ ___
 
 ___
 
-<h2 style="text-align:center">Server-Rest-API</h2>
+## Server-Rest-API
 - ❌ [Save & Load] Save and load games
 
 ___
@@ -32,5 +31,5 @@ ___
 
 ___
 
-<h4 style="text-align:center">License</h4>
+#### License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
