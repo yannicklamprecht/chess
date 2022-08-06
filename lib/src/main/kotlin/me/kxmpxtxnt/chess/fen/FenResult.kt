@@ -4,7 +4,5 @@ import me.kxmpxtxnt.chess.board.field.Field
 import me.kxmpxtxnt.chess.board.field.FieldColor
 import me.kxmpxtxnt.chess.fen.castle.CastleResult
 import me.kxmpxtxnt.chess.piece.Piece
-import java.awt.Color
 
-class FenResult(val lineup: Map<Field, Piece>, val turn: FieldColor) {
-}
+class FenResult(val lineup: HashMap<Field, Piece>, val turn: FieldColor, val castleResult: List<Pair<CastleResult.FieldColor, CastleResult.Side>>)

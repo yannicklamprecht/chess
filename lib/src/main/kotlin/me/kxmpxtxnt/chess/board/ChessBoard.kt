@@ -2,15 +2,15 @@ package me.kxmpxtxnt.chess.board
 
 import me.kxmpxtxnt.chess.board.field.Field
 import me.kxmpxtxnt.chess.board.field.FieldColor
+import me.kxmpxtxnt.chess.fen.fromFen
 import me.kxmpxtxnt.chess.piece.Piece
 import java.awt.Color
 
+class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 0") {
 
-private var lineup: HashMap<Field, Piece> = HashMap()
-val outPieces = arrayListOf<Piece>()
-var fields = arrayListOf<Field>()
-
-class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0") {
+  var lineup: HashMap<Field, Piece> = HashMap()
+  val outPieces = arrayListOf<Piece>()
+  var fields = arrayListOf<Field>()
 
   val turn: Color = Color.WHITE
 
@@ -27,14 +27,14 @@ class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR 
           FieldColor.BLACK
         }
         when (column) {
-          7 -> fields.add(Field("a", row, fieldID, color))
-          6 -> fields.add(Field("b", row, fieldID, color))
-          5 -> fields.add(Field("c", row, fieldID, color))
-          4 -> fields.add(Field("d", row, fieldID, color))
-          3 -> fields.add(Field("e", row, fieldID, color))
-          2 -> fields.add(Field("f", row, fieldID, color))
-          1 -> fields.add(Field("g", row, fieldID, color))
-          0 -> fields.add(Field("h", row, fieldID, color))
+          7 -> fields.add(Field("a", row, fieldID, color, this))
+          6 -> fields.add(Field("b", row, fieldID, color, this))
+          5 -> fields.add(Field("c", row, fieldID, color, this))
+          4 -> fields.add(Field("d", row, fieldID, color, this))
+          3 -> fields.add(Field("e", row, fieldID, color, this))
+          2 -> fields.add(Field("f", row, fieldID, color, this))
+          1 -> fields.add(Field("g", row, fieldID, color, this))
+          0 -> fields.add(Field("h", row, fieldID, color, this))
         }
         c = !c
         fieldID++
@@ -46,6 +46,8 @@ class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR 
       }
       fields.sortBy { it.fieldID }
     }
+
+    lineup = fromFen(this).lineup
   }
 
   fun getField(id: Int): Field {
@@ -66,16 +68,19 @@ class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR 
     }
     throw IllegalArgumentException("Entered illegal piece.")
   }
+
+
 }
 
 fun Piece.isOut(): Boolean {
-  return outPieces.contains(this)
+  return board.outPieces.contains(this)
 }
 
 fun Field.isEmpty(): Boolean {
-  return lineup[this] == null
+  return board.lineup[this] == null
 }
 
 fun Field.getPiece(): Piece?{
-  return lineup[this]
+  return board.lineup[this]
 }
+
