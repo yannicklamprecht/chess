@@ -1,12 +1,12 @@
-package me.kxmpxtxnt.chess.fen.enpassent
+package me.kxmpxtxnt.chess.fen.load.enpassent
 
 import me.kxmpxtxnt.chess.board.ChessBoard
 import me.kxmpxtxnt.chess.board.field.Field
 
-class EnpassentResult {
+class EnpassentLoader {
 
   companion object {
-    fun of(passent: String, board: ChessBoard): Field?{
+    fun load(passent: String, board: ChessBoard): Field?{
       if(passent == "-") return null
 
       if(!("abcdefgh".contains(passent[0].lowercase()) && passent[1].digitToInt() in 3..6)){

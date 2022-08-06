@@ -25,7 +25,11 @@ class Piece(val type: Type, val board: ChessBoard) {
     WHITE_KING("K", 0, true);
 
     override fun toString(): String {
-      return name.lowercase()
+      return name.uppercase()
     }
+  }
+
+  override fun toString(): String {
+    return type.toString()
   }
 }

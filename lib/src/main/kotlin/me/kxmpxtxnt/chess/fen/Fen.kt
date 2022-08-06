@@ -1,39 +1,43 @@
 package me.kxmpxtxnt.chess.fen
 
 import me.kxmpxtxnt.chess.board.ChessBoard
-import me.kxmpxtxnt.chess.fen.castle.CastleResult
-import me.kxmpxtxnt.chess.fen.enpassent.EnpassentResult
-import me.kxmpxtxnt.chess.fen.fullmove.FullMoveResult
-import me.kxmpxtxnt.chess.fen.halvmove.HalfMoveResult
-import me.kxmpxtxnt.chess.fen.pieces.LineupResult
+import me.kxmpxtxnt.chess.fen.load.castle.CastleLoader
+import me.kxmpxtxnt.chess.fen.load.FenLoader
+import me.kxmpxtxnt.chess.fen.load.enpassent.EnpassentLoader
+import me.kxmpxtxnt.chess.fen.load.fullmove.FullMoveLoader
+import me.kxmpxtxnt.chess.fen.load.halvmove.HalfMoveLoader
+import me.kxmpxtxnt.chess.fen.load.lineup.LineupLoader
+import me.kxmpxtxnt.chess.fen.save.lineup.LineupSaver
+import me.kxmpxtxnt.chess.fen.save.turn.TurnSaver
 import java.util.regex.Pattern
 
 fun toFen(board: ChessBoard): String {
-  if (!validateFen(board.fen)) {
-    throw IllegalArgumentException("FEN (Forsyth-Edwards Notation) in the board is invalid. [${board.fen}]")
-  }
+  val lineup = LineupSaver.save(board)
 
-  return ""
+  val turn = TurnSaver.save(board)
+
+  //NOT FULL IMPLEMENTED
+  return "$lineup $turn -- 0 0"
 }
 
-fun fromFen(board: ChessBoard): FenResult {
+fun fromFen(board: ChessBoard): FenLoader {
   if (!validateFen(board.fen)) throw IllegalArgumentException("Entered FEN (Forsyth-Edwards Notation) is not valid. [${board.fen}]")
 
   val fenParts = board.fen.split(" ")
 
-  val lineup = LineupResult.of(fenParts[0], board)
+  val lineup = LineupLoader.load(fenParts[0], board)
 
-  val turn = LineupResult.TurnResult.of(fenParts[1])
+  val turn = LineupLoader.TurnResult.load(fenParts[1])
 
-  val castle = CastleResult.of(fenParts[2])
+  val castle = CastleLoader.load(fenParts[2])
 
-  val enpassent = EnpassentResult.of(fenParts[3], board)
+  val enpassent = EnpassentLoader.load(fenParts[3], board)
 
-  val halfMove = HalfMoveResult.of(fenParts[4])
+  val halfMove = HalfMoveLoader.load(fenParts[4])
 
-  val fullMove = FullMoveResult.of(fenParts[5])
+  val fullMove = FullMoveLoader.load(fenParts[5])
 
-  return FenResult(lineup, turn, castle, enpassent, halfMove, fullMove)
+  return FenLoader(lineup, turn, castle, enpassent, halfMove, fullMove)
 }
 
 fun validateFen(fen: String): Boolean {

@@ -1,6 +1,6 @@
-package me.kxmpxtxnt.chess.fen.castle
+package me.kxmpxtxnt.chess.fen.load.castle
 
-class CastleResult {
+class CastleLoader {
 
   enum class FieldColor{
     BOTH,
@@ -13,7 +13,7 @@ class CastleResult {
   }
 
   companion object {
-    fun of(castle: String): List<Pair<FieldColor, Side>> {
+    fun load(castle: String): List<Pair<FieldColor, Side>> {
       return when (castle.length) {
         1 -> when(castle){
           "-" -> emptyList()

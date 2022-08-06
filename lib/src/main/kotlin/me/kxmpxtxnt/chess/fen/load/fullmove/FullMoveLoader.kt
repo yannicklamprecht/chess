@@ -1,9 +1,9 @@
-package me.kxmpxtxnt.chess.fen.fullmove
+package me.kxmpxtxnt.chess.fen.load.fullmove
 
-class FullMoveResult {
+class FullMoveLoader {
 
   companion object{
-    fun of(fullMove: String): Int{
+    fun load(fullMove: String): Int{
       return when {
         fullMove.toIntOrNull() == null -> throw IllegalArgumentException("Entered fullmove number is not valid.")
         else -> fullMove.toInt()

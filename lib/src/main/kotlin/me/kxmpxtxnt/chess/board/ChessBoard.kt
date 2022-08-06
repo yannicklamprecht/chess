@@ -2,10 +2,9 @@ package me.kxmpxtxnt.chess.board
 
 import me.kxmpxtxnt.chess.board.field.Field
 import me.kxmpxtxnt.chess.board.field.FieldColor
-import me.kxmpxtxnt.chess.fen.FenResult
+import me.kxmpxtxnt.chess.fen.load.FenLoader
 import me.kxmpxtxnt.chess.fen.fromFen
 import me.kxmpxtxnt.chess.piece.Piece
-import java.awt.Color
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -16,7 +15,7 @@ class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/p
   var fields = arrayListOf<Field>()
 
   var turn = FieldColor.WHITE
-  lateinit var fenResult: FenResult
+  var fenLoader: FenLoader
 
   init {
     var row = 7
@@ -50,7 +49,10 @@ class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/p
       fields.sortBy { it.fieldID }
     }
 
-    fenResult = fromFen(this)
+    fenLoader = fromFen(this)
+
+    lineup = fenLoader.lineup
+    turn = fenLoader.turn
   }
 
   fun getField(id: Int): Field {

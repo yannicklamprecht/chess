@@ -8,7 +8,7 @@ easy to integrate in any application.
 ___
 
 ## Core
-- ⚙️ [FEN] `load` | `save`([Wikipedia.org](https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation)) 
+- ⚙️ [FEN] `load ✅` | `save ⚙️`([Wikipedia.org](https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation)) 
 / ([Chess.com](https://www.chess.com/terms/fen-chess))
 - ❌ [Regular chess] Normal chess with all functions, recognition etc. Player vs. player
 - ❌ [Chess-Computer] Chess computer against which you can play a direct 1v1.
