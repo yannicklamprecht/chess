@@ -7,8 +7,10 @@ import me.kxmpxtxnt.chess.fen.fromFen
 import me.kxmpxtxnt.chess.piece.Piece
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
-class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 0") {
+class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 0") : Iterable<Field> {
 
   var lineup: HashMap<Field, Piece> = HashMap()
   val outPieces = arrayListOf<Piece>()
@@ -87,6 +89,18 @@ class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/p
       }
     }
     throw IllegalArgumentException("Entered illegal piece.")
+  }
+
+  fun boardSideSize(): Int {
+    return sqrt(fields.size.toDouble()).roundToInt()
+  }
+
+  fun elementSize(): Int {
+    return fields.size
+  }
+
+  override fun iterator(): Iterator<Field> {
+    return fields.iterator();
   }
 }
 

@@ -6,44 +6,32 @@ import me.kxmpxtxnt.chess.board.isEmpty
 
 class LineupSaver {
 
-  companion object{
-    fun save(board: ChessBoard): String{
+  companion object {
+    fun save(board: ChessBoard): String {
       val builder = StringBuilder()
 
       var skip = 0
-      var id = 0
-
       var sequenceSkip = 0
 
-      var pieceBeforeSkip = false
-
-      (0..63).forEach { i ->
-        val field = board.getField(i)
-
+      board.forEachIndexed { index, field ->
+        sequenceSkip++
         if (field.isEmpty()) {
           skip++
-          println(skip)
-          if(skip == 8){
-            builder.append("$skip/")
+          if (skip == board.boardSideSize()) {
+            builder.append("$skip")
             skip = 0
           }
-        }
-
-        if (field.getPiece() != null) {
-          builder.append("${field.getPiece()?.type?.fenChar}")
-          pieceBeforeSkip = true
-
-          if(sequenceSkip == 8){
-            builder.append("/")
-            sequenceSkip = 0
+        } else {
+          if (skip > 0) {
+            builder.append(skip)
           }
+          builder.append(field.getPiece()?.type?.fenChar)
+          skip = 0
         }
-
-        id += skip + 1
-
-        if(pieceBeforeSkip) skip = 0
-        pieceBeforeSkip = false
-        sequenceSkip++
+        if (sequenceSkip == board.boardSideSize() && index < board.elementSize() - 1) {
+          builder.append("/")
+          sequenceSkip = 0
+        }
       }
       return builder.toString()
     }
