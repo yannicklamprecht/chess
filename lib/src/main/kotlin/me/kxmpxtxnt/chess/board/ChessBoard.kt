@@ -2,17 +2,21 @@ package me.kxmpxtxnt.chess.board
 
 import me.kxmpxtxnt.chess.board.field.Field
 import me.kxmpxtxnt.chess.board.field.FieldColor
+import me.kxmpxtxnt.chess.fen.FenResult
 import me.kxmpxtxnt.chess.fen.fromFen
 import me.kxmpxtxnt.chess.piece.Piece
 import java.awt.Color
+import java.util.*
+import kotlin.collections.HashMap
 
-class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 0") {
+class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 0") {
 
   var lineup: HashMap<Field, Piece> = HashMap()
   val outPieces = arrayListOf<Piece>()
   var fields = arrayListOf<Field>()
 
-  val turn: Color = Color.WHITE
+  var turn = FieldColor.WHITE
+  lateinit var fenResult: FenResult
 
   init {
     var row = 7
@@ -21,10 +25,9 @@ class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR 
     var color: FieldColor
     for (field in 0..7) {
       for (column in 0..7) {
-        color = if (c) {
-          FieldColor.WHITE
-        } else {
-          FieldColor.BLACK
+        color = when {
+          c -> FieldColor.WHITE
+          else -> FieldColor.BLACK
         }
         when (column) {
           7 -> fields.add(Field("a", row, fieldID, color, this))
@@ -47,7 +50,7 @@ class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR 
       fields.sortBy { it.fieldID }
     }
 
-    lineup = fromFen(this).lineup
+    fenResult = fromFen(this)
   }
 
   fun getField(id: Int): Field {
@@ -60,6 +63,21 @@ class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR 
     throw IllegalArgumentException("Entered illegal field id.")
   }
 
+  fun getField(field: String): Field {
+    if(field.length != 2){
+      throw IllegalArgumentException("Entered field is not valid. Valid fields example: a3, G5")
+    }
+
+    val x = field[0].toString()
+    val y = field[1].digitToInt()
+
+    fields.forEach {
+      if(it.x == x && it.y == y) return it
+    }
+
+    throw IllegalArgumentException("Entered field is not valid. Valid fields example: a3, G5")
+  }
+
   fun getField(piece: Piece): Field {
     for (field in lineup.keys) {
       if (lineup[field] != piece) {
@@ -68,8 +86,6 @@ class ChessBoard(val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR 
     }
     throw IllegalArgumentException("Entered illegal piece.")
   }
-
-
 }
 
 fun Piece.isOut(): Boolean {
@@ -83,4 +99,3 @@ fun Field.isEmpty(): Boolean {
 fun Field.getPiece(): Piece?{
   return board.lineup[this]
 }
-

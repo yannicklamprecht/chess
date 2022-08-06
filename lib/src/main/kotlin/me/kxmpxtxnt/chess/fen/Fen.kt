@@ -2,6 +2,9 @@ package me.kxmpxtxnt.chess.fen
 
 import me.kxmpxtxnt.chess.board.ChessBoard
 import me.kxmpxtxnt.chess.fen.castle.CastleResult
+import me.kxmpxtxnt.chess.fen.enpassent.EnpassentResult
+import me.kxmpxtxnt.chess.fen.fullmove.FullMoveResult
+import me.kxmpxtxnt.chess.fen.halvmove.HalfMoveResult
 import me.kxmpxtxnt.chess.fen.pieces.LineupResult
 import java.util.regex.Pattern
 
@@ -24,11 +27,13 @@ fun fromFen(board: ChessBoard): FenResult {
 
   val castle = CastleResult.of(fenParts[2])
 
-  castle.forEach {
-    println("${it.first} | ${it.second}")
-  }
+  val enpassent = EnpassentResult.of(fenParts[3], board)
 
-  return FenResult(lineup, turn, castle)
+  val halfMove = HalfMoveResult.of(fenParts[4])
+
+  val fullMove = FullMoveResult.of(fenParts[5])
+
+  return FenResult(lineup, turn, castle, enpassent, halfMove, fullMove)
 }
 
 fun validateFen(fen: String): Boolean {
@@ -42,7 +47,7 @@ private const val FEN_REGEX =
       "\\s+" +
       "(?<Castling>-|k?q?K?Q?K?Q?q?K?)" +
       "\\s+" +
-      "(?<EnPassant>-|[a-h][3-6])" +
+      "(?<EnPassant>-|[a-h][3,6])" +
       "\\s+" +
       "(?<HalfMoveClock>\\d+)" +
       "\\s+" +
