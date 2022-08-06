@@ -3,7 +3,7 @@
 
 ___
 Chess library for general use without precise conditions, <br> 
-easy to integrate in any application. <br>
+easy to integrate in any application.
 ___
 <h2 style="text-align:center">Core</h2>
 - ⚙️ [FEN] `load` | `save`([Wikipedia.org](https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation)) 
@@ -13,16 +13,15 @@ ___
 - ❌ [Game-Memory] Saves a game or a game progression in a publicly available database
 - ❌ [Asynchronicity] Make entire library asynchronous
 <br><br>
-- ❌ [Examples] Examples of the use of the library <br>
+- ❌ [Examples] Examples of the use of the library
 ___
 <h2 style="text-align:center">Server-Rest-API</h2>
-- ❌ [Save & Load] Save and load games <br>
+- ❌ [Save & Load] Save and load games
 ___
-<br>❌ - Not integrated <br>
+❌ - Not integrated <br>
 ❓ - Not sure if it will be integrated <br>
 ⚙️ - In progress <br>
 ✅ - Fully integrated
 ___
-
 <h4 style="text-align:center">License</h4>
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
