@@ -18,8 +18,8 @@ ___
 <h2 style="text-align:center">Server-Rest-API</h2>
 - ❌ [Save & Load] Save and load games <br>
 ___
-- ❌ - Not integrated <br>
-- ❓ - Not sure if it will be integrated <br>
+❌ - Not integrated <br>
+❓ - Not sure if it will be integrated <br>
 ⚙️ - In progress <br>
 ✅ - Fully integrated <br>
 ___
