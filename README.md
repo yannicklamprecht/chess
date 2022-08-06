@@ -16,12 +16,12 @@ ___
 - ❌ [Examples] Examples of the use of the library <br>
 ___
 <h2 style="text-align:center">Server-Rest-API</h2>
-- ❌ [Save & Load] Save and load games
+- ❌ [Save & Load] Save and load games <br>
 ___
 ❌ - Not integrated <br>
 ❓ - Not sure if it will be integrated <br>
 ⚙️ - In progress <br>
-✅ - Fully integrated 
+✅ - Fully integrated <br>
 ___
 
 <h4 style="text-align:center">License</h4>
