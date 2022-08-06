@@ -5,13 +5,13 @@ import me.kxmpxtxnt.chess.board.field.Field
 import me.kxmpxtxnt.chess.board.field.FieldColor
 import me.kxmpxtxnt.chess.piece.Piece
 
-class LineupLoader {
+class LineupResult {
 
   companion object{
 
     private val lineup: HashMap<Field, Piece> = hashMapOf()
 
-    fun load(positions: String, board: ChessBoard): HashMap<Field, Piece>{
+    fun of(positions: String, board: ChessBoard): HashMap<Field, Piece>{
       var fieldId = 0
 
       positions.forEach { fenChar ->
@@ -43,9 +43,9 @@ class LineupLoader {
     }
   }
 
-  class TurnLoader{
+  class TurnResult{
     companion object{
-      fun load(turn: String): FieldColor{
+      fun of(turn: String): FieldColor{
         return when (turn.lowercase().trim()) {
           "b" -> FieldColor.BLACK
           "w" -> FieldColor.WHITE

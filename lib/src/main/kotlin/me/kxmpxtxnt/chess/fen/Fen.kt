@@ -2,7 +2,7 @@ package me.kxmpxtxnt.chess.fen
 
 import me.kxmpxtxnt.chess.board.ChessBoard
 import me.kxmpxtxnt.chess.fen.castle.CastleResult
-import me.kxmpxtxnt.chess.fen.pieces.LineupLoader
+import me.kxmpxtxnt.chess.fen.pieces.LineupResult
 import java.util.regex.Pattern
 
 fun toFen(board: ChessBoard): String {
@@ -18,9 +18,9 @@ fun fromFen(board: ChessBoard): FenResult {
 
   val fenParts = board.fen.split(" ")
 
-  val lineup = LineupLoader.load(fenParts[0], board)
+  val lineup = LineupResult.of(fenParts[0], board)
 
-  val turn = LineupLoader.TurnLoader.load(fenParts[1])
+  val turn = LineupResult.TurnResult.of(fenParts[1])
 
   val castle = CastleResult.of(fenParts[2])
 
