@@ -4,19 +4,19 @@ import me.kxmpxtxnt.chess.board.ChessBoard
 import me.kxmpxtxnt.chess.board.field.Field
 import me.kxmpxtxnt.chess.fen.convert.Converter
 
-class EnpassentConverter(private val board: ChessBoard) : Converter<Field> {
+class EnpassentConverter(private val board: ChessBoard) : Converter<Field, Field> {
 
-  override fun toFenString(input: Field): String {
+  override fun asString(input: Field): String {
     TODO()
   }
 
-  override fun fromFenString(fenPart: String): Field? {
-    if(fenPart == "-") return null
+  override fun fromString(input: String): Field? {
+    if(input == "-") return null
 
-    if(!("abcdefgh".contains(fenPart[0].lowercase()) && fenPart[1].digitToInt() in 3..6)){
+    if(!("abcdefgh".contains(input[0].lowercase()) && input[1].digitToInt() in 3..6)){
       throw IllegalArgumentException("Entered en passent is not valid. Valid en passent: a3, h6")
     }
-    return board.getField(fenPart)
+    return board.getField(input)
   }
 
 }

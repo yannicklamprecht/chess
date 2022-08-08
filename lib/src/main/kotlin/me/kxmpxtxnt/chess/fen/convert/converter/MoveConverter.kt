@@ -7,30 +7,30 @@ enum class Rule{
   CONTINUE
 }
 
-class HalfMoveConverter : Converter<Pair<Rule, Int>> {
+class HalfMoveConverter : Converter<Pair<Rule, Int>, Pair<Rule, Int>> {
 
-  override fun toFenString(input: Pair<Rule, Int>): String {
+  override fun asString(input: Pair<Rule, Int>): String {
     TODO("Not yet implemented")
   }
 
-  override fun fromFenString(fenPart: String): Pair<Rule, Int> {
+  override fun fromString(input: String): Pair<Rule, Int> {
     return when {
-      fenPart.toIntOrNull() == null -> throw IllegalArgumentException("Entered halfmove argument is not a valid halfmove number.")
-      fenPart.toInt() < 100 -> Pair(Rule.CONTINUE, fenPart.toInt())
-      else -> Pair(Rule.DRAW, fenPart.toInt())
+      input.toIntOrNull() == null -> throw IllegalArgumentException("Entered halfmove argument is not a valid halfmove number.")
+      input.toInt() < 100 -> Pair(Rule.CONTINUE, input.toInt())
+      else -> Pair(Rule.DRAW, input.toInt())
     }
   }
 }
 
-class FullMoveConverter : Converter<Int> {
-  override fun toFenString(input: Int): String {
+class FullMoveConverter : Converter<Int, Int> {
+  override fun asString(input: Int): String {
     TODO("Not yet implemented")
   }
 
-  override fun fromFenString(fenPart: String): Int {
+  override fun fromString(input: String): Int {
     return when {
-      fenPart.toIntOrNull() == null -> throw IllegalArgumentException("Entered fullmove number is not valid.")
-      else -> fenPart.toInt()
+      input.toIntOrNull() == null -> throw IllegalArgumentException("Entered fullmove number is not valid.")
+      else -> input.toInt()
     }
   }
 }

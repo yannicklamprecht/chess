@@ -1,7 +1,7 @@
 package me.kxmpxtxnt.chess.fen.convert
 
-interface Converter<Any> {
+interface Converter<Input, Output> {
 
-  fun toFenString(input: Any): String
-  fun fromFenString(fenPart: String): Any?
+  fun asString(input: Input): String
+  fun fromString(input: String): Output?
 }

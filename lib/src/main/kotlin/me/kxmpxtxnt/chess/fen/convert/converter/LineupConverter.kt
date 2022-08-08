@@ -1,15 +1,13 @@
 package me.kxmpxtxnt.chess.fen.convert.converter
 
-import me.kxmpxtxnt.chess.board.ChessBoard
+import me.kxmpxtxnt.chess.board.*
 import me.kxmpxtxnt.chess.board.field.Field
-import me.kxmpxtxnt.chess.board.getPiece
-import me.kxmpxtxnt.chess.board.isEmpty
 import me.kxmpxtxnt.chess.fen.convert.Converter
 import me.kxmpxtxnt.chess.board.piece.Piece
 
-class LineupConverter(private val board: ChessBoard) : Converter<HashMap<Field, Piece>> {
+class LineupConverter(private val board: ChessBoard) : Converter<HashMap<Field, Piece>, HashMap<Field, Piece>> {
 
-  override fun toFenString(input: HashMap<Field, Piece>): String {
+  override fun asString(input: HashMap<Field, Piece>): String {
     val builder = StringBuilder()
 
     var skip = 0
@@ -38,12 +36,12 @@ class LineupConverter(private val board: ChessBoard) : Converter<HashMap<Field, 
     return builder.toString()
   }
 
-  override fun fromFenString(fenPart: String): HashMap<Field, Piece> {
+  override fun fromString(input: String): HashMap<Field, Piece> {
     val lineup: HashMap<Field, Piece> = hashMapOf()
 
     var fieldId = 0
 
-    fenPart.forEach { fenChar ->
+    input.forEach { fenChar ->
       if (fieldId == 64) {
         return@forEach
       }
@@ -61,7 +59,11 @@ class LineupConverter(private val board: ChessBoard) : Converter<HashMap<Field, 
         if (type.fenChar.first() == fenChar) {
           for (field in board.fields) {
             if (field.fieldID == fieldId) {
-              lineup[field] = Piece(type, board)
+              lineup[field] = Piece(type, PiecePosition(
+                      board.getField(fieldId).position.x,
+                      board.getField(fieldId).position.y,
+                      board = board
+              ))
             }
           }
           fieldId++
