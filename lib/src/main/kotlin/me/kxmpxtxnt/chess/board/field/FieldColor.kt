@@ -1,5 +1,6 @@
 package me.kxmpxtxnt.chess.board.field
 
+@kotlinx.serialization.Serializable
 enum class FieldColor {
 
   BLACK,

@@ -1,18 +1,22 @@
 package me.kxmpxtxnt.chess.board
 
+import kotlinx.serialization.Contextual
 import me.kxmpxtxnt.chess.board.field.Field
 import me.kxmpxtxnt.chess.board.field.FieldColor
 import me.kxmpxtxnt.chess.fen.fromFen
-import me.kxmpxtxnt.chess.piece.Piece
+import me.kxmpxtxnt.chess.board.piece.Piece
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 0") : Iterable<Field> {
+@kotlinx.serialization.Serializable
+class ChessBoard(
+        @Contextual val id: UUID = UUID.randomUUID(),
+        val fen: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 0"
+): Iterable<Field> {
 
   var lineup: HashMap<Field, Piece> = HashMap()
-  val outPieces = arrayListOf<Piece>()
   var fields = arrayListOf<Field>()
 
   var turn = FieldColor.WHITE
@@ -29,14 +33,14 @@ class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/p
           else -> FieldColor.BLACK
         }
         when (column) {
-          7 -> fields.add(Field("a", row, fieldID, color, this))
-          6 -> fields.add(Field("b", row, fieldID, color, this))
-          5 -> fields.add(Field("c", row, fieldID, color, this))
-          4 -> fields.add(Field("d", row, fieldID, color, this))
-          3 -> fields.add(Field("e", row, fieldID, color, this))
-          2 -> fields.add(Field("f", row, fieldID, color, this))
-          1 -> fields.add(Field("g", row, fieldID, color, this))
-          0 -> fields.add(Field("h", row, fieldID, color, this))
+          7 -> fields.add(Field(Position("a", row, this), fieldID, color))
+          6 -> fields.add(Field(Position("b", row, this), fieldID, color))
+          5 -> fields.add(Field(Position("c", row, this), fieldID, color))
+          4 -> fields.add(Field(Position("d", row, this), fieldID, color))
+          3 -> fields.add(Field(Position("e", row, this), fieldID, color))
+          2 -> fields.add(Field(Position("f", row, this), fieldID, color))
+          1 -> fields.add(Field(Position("g", row, this), fieldID, color))
+          0 -> fields.add(Field(Position("h", row, this), fieldID, color))
         }
         c = !c
         fieldID++
@@ -46,12 +50,11 @@ class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/p
       if (row == 0) {
         row = 7
       }
-      fields.sortBy { it.fieldID }
     }
 
-    fromFen(this).let {
-      lineup = it.lineup
-      turn = it.turn
+    fromFen(this).let { result ->
+      lineup = result.lineup
+      turn = result.turn
     }
   }
 
@@ -73,8 +76,8 @@ class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/p
     val x = field[0].toString()
     val y = field[1].digitToInt()
 
-    fields.forEach {
-      if(it.x == x && it.y == y) return it
+    fields.forEach { currentField ->
+      if(currentField.position.x == x && currentField.position.y == y) return currentField
     }
 
     throw IllegalArgumentException("Entered field is not valid. Valid fields example: a3, G5")
@@ -103,13 +106,13 @@ class ChessBoard(val id: UUID = UUID.randomUUID(), val fen: String = "rnbqkbnr/p
 }
 
 fun Piece.isOut(): Boolean {
-  return board.outPieces.contains(this)
+  return position.isOut
 }
 
 fun Field.isEmpty(): Boolean {
-  return board.lineup[this] == null
+  return getPiece() == null
 }
 
 fun Field.getPiece(): Piece?{
-  return board.lineup[this]
+  return position.board.lineup[this]
 }

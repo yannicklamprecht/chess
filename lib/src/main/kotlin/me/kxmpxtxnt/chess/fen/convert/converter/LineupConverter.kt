@@ -5,7 +5,7 @@ import me.kxmpxtxnt.chess.board.field.Field
 import me.kxmpxtxnt.chess.board.getPiece
 import me.kxmpxtxnt.chess.board.isEmpty
 import me.kxmpxtxnt.chess.fen.convert.Converter
-import me.kxmpxtxnt.chess.piece.Piece
+import me.kxmpxtxnt.chess.board.piece.Piece
 
 class LineupConverter(private val board: ChessBoard) : Converter<HashMap<Field, Piece>> {
 
