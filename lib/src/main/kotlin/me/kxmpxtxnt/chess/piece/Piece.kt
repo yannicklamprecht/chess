@@ -1,8 +1,9 @@
 package me.kxmpxtxnt.chess.piece
 
 import me.kxmpxtxnt.chess.board.ChessBoard
+import java.util.*
 
-class Piece(val type: Type, val board: ChessBoard) {
+class Piece(val type: Type, val board: ChessBoard, val id: UUID = UUID.randomUUID()) {
 
   enum class Type(val fenChar: String, val startAmount: Int, val hasMaxAmount: Boolean = false) {
 
