@@ -1,9 +1,15 @@
-package me.kxmpxtxnt.chess.piece
+package me.kxmpxtxnt.chess.board.piece
 
-import me.kxmpxtxnt.chess.board.ChessBoard
+import kotlinx.serialization.Contextual
+import me.kxmpxtxnt.chess.board.PiecePosition
 import java.util.*
 
-class Piece(val type: Type, val board: ChessBoard, val id: UUID = UUID.randomUUID()) {
+@kotlinx.serialization.Serializable
+class Piece(
+        val type: Type,
+        val position: PiecePosition,
+        @Contextual val id: UUID = UUID.randomUUID()
+) {
 
   enum class Type(val fenChar: String, val startAmount: Int, val hasMaxAmount: Boolean = false) {
 
@@ -28,9 +34,5 @@ class Piece(val type: Type, val board: ChessBoard, val id: UUID = UUID.randomUUI
     override fun toString(): String {
       return name.uppercase()
     }
-  }
-
-  override fun toString(): String {
-    return type.toString()
   }
 }

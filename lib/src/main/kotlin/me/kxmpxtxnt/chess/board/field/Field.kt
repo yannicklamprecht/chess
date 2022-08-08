@@ -1,17 +1,17 @@
 package me.kxmpxtxnt.chess.board.field
 
-import me.kxmpxtxnt.chess.board.ChessBoard
+import me.kxmpxtxnt.chess.board.Position
 
-data class Field(val x: String, val  y: Int, val fieldID: Int, val color: FieldColor, val board: ChessBoard) {
+@kotlinx.serialization.Serializable
+data class Field(
+        val position: Position,
+        val fieldID: Int,
+        val color: FieldColor
+) {
 
   init {
-    if(y > 7 || !"abcdefgh".contains(x.lowercase())){
+    if(position.y > 7 || !"abcdefgh".contains(position.x.lowercase())){
       throw IllegalArgumentException("Field must be in correct order. [a-h] & [0-7]")
     }
-  }
-
-  override fun toString(): String {
-    val id = board.id.toString().substring(0..5)
-    return "[$id] - $x | $y - $fieldID - $color"
   }
 }
