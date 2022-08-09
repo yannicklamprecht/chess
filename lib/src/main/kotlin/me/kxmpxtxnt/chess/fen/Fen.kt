@@ -16,11 +16,11 @@ fun fromFen(board: ChessBoard): ConvertResult {
   val fenParts = board.fen.split(" ")
 
   return ConvertResult(
-          Converters.lineupConverter(board).fromFenString(fenParts[0]),
-          Converters.turnConverter(board).fromFenString(fenParts[1]),
-          Converters.castleConverter().fromFenString(fenParts[2]),
-          Converters.halfMoveConverter().fromFenString(fenParts[3]),
-          Converters.fullMoveConverter().fromFenString(fenParts[4])
+          Converters.lineupConverter(board).fromString(fenParts[0]),
+          Converters.turnConverter(board).fromString(fenParts[1]),
+          Converters.castleConverter().fromString(fenParts[2]),
+          Converters.halfMoveConverter().fromString(fenParts[3]),
+          Converters.fullMoveConverter().fromString(fenParts[4])
   )
 }
 

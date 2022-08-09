@@ -5,6 +5,8 @@ import me.kxmpxtxnt.chess.board.field.Field
 import me.kxmpxtxnt.chess.board.field.FieldColor
 import me.kxmpxtxnt.chess.fen.fromFen
 import me.kxmpxtxnt.chess.board.piece.Piece
+import me.kxmpxtxnt.chess.game.history.Game
+import me.kxmpxtxnt.chess.game.move.Move
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.roundToInt
@@ -18,6 +20,8 @@ class ChessBoard(
 
   var lineup: HashMap<Field, Piece> = HashMap()
   var fields = arrayListOf<Field>()
+
+  var history: Game.History = Game.History(emptySet<Move>() as TreeSet<Move>, Optional.empty())
 
   var turn = FieldColor.WHITE
 
